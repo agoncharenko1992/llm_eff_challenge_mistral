@@ -40,6 +40,11 @@ repo_id = "mistralai/Mistral-7B-v0.1"
 model_name = 'mistral_7b_v0.1'
 #instruct_mistral = "mistralai/Mistral-7B-Instruct-v0.1"
 
+huggingface_write_token="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"
+login(token=huggingface_write_token)
+repo_name = "agoncharenko1992/llm_challenge_evaluation"
+
+
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_use_double_quant=True,
@@ -318,3 +323,13 @@ model.config.use_cache = False  # silence the warnings. Please re-enable for inf
 
 trainer.train()
 
+peft_model_fp16 = AutoPeftModelForCausalLM.from_pretrained(
+    (output_dir / 'checkpoint-4200').as_posix(),
+    low_cpu_mem_usage=True,
+    torch_dtype=torch.float16,
+    cache_dir='/train_data/.cache',
+    use_auth_token=True,
+    device_map='cpu',
+)
+
+peft_model_fp16.push_to_hub(repo_name)

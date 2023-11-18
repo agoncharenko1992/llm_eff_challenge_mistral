@@ -30,7 +30,8 @@ logging.basicConfig(level=logging.INFO)
 tokenizer = AutoTokenizer.from_pretrained("mistralai/Mistral-7B-v0.1")
 
 peft_model_fp16 = AutoPeftModelForCausalLM.from_pretrained(
-    'agoncharenko1992/mistral_llm_eff_challenge',
+    # 'agoncharenko1992/mistral_llm_eff_challenge',
+    'agoncharenko1992/llm_challenge_evaluation',
     low_cpu_mem_usage=True,
     torch_dtype=torch.float16,
     use_auth_token=True,
